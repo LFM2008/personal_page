@@ -1963,7 +1963,7 @@ items.forEach(function (p) {
       ctx.fillStyle = "rgba(217,158,0,0.55)";           /* 代码：浅黄 */
       ctx.fillText(lines[i].slice(0, maxChars), 64, y);
     }
-    off += 0.9;
+    off += 1.35;   /* 1.5 倍速 */
     if (off >= lineH) off -= lineH;
   }
   timer = setInterval(draw, 33);
