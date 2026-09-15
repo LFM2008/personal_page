@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L的站点 · 个人主页</title>
+<meta name="description" content="L的个人主页：日记，杂谈，神秘存放点">
+<!-- favicon：内联 SVG，黄色圆 + 白点，可自行替换 -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23F5B800'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23FFFFFF'/%3E%3C/svg%3E">
+<style>
+/* ===== 设计 token：白 + 黄，简约 ===== */
+:root{
+  --bg: #FFFFFF;
+  --bg-warm: #FFFBEF;      /* 淡暖黄，区块底 */
+  --bg-mark: #FFF1C2;      /* 黄高亮底 */
+  --ink: #26241C;          /* 暖黑，正文 */
+  --ink-soft: #7C7561;     /* 次要文字 */
+  --accent: #F5B800;       /* 主黄 */
+  --accent-deep: #D99E00;  /* 深黄，hover */
+  --line: #EFE7D2;         /* 浅黄褐分隔线 */
+  --maxw: 720px;
+  --header-h: 56px;
+}
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ scroll-behavior:smooth; scroll-padding-top: calc(var(--header-h) + 16px); }
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC","Source Han Sans SC",sans-serif;
+  font-size:16px;
+  line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+}
+a{ color:inherit; text-decoration:none; }
+ul{ list-style:none; }
+::selection{ background:var(--accent); color:var(--ink); }
+:focus-visible{ outline:2px solid var(--accent-deep); outline-offset:2px; }
+
+/* ===== 无障碍跳转 ===== */
+.skip-link{
+  position:absolute; left:8px; top:-48px; z-index:100;
+  background:var(--ink); color:#fff; padding:8px 14px; border-radius:6px;
+  transition:top .2s;
+}
+.skip-link:focus{ top:8px; }
+
+/* ===== 顶部导航 ===== */
+.site-header{
+  position:sticky; top:0; z-index:50;
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{
+  max-width:var(--maxw); margin:0 auto; height:var(--header-h);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 20px;
+}
+.logo{
+  display:inline-flex; align-items:center; gap:8px;
+  font-weight:800; letter-spacing:.02em;
+}
+.logo-dot{
+  width:14px; height:14px; border-radius:50%; background:var(--accent);
+  box-shadow:0 0 0 3px var(--bg-mark);
+}
+.nav-links{ display:flex; gap:22px; }
+.nav-links a{
+  font-size:14px; color:var(--ink-soft); padding:4px 2px;
+  border-bottom:2px solid transparent; transition:color .2s,border-color .2s;
+}
+.nav-links a:hover{ color:var(--ink); }
+.nav-links a[aria-current="true"]{ color:var(--ink); border-bottom-color:var(--accent); }
+.write-btn{
+  display:inline-flex; align-items:center;
+  background:var(--accent); color:var(--ink); border:none;
+  font-size:14px; font-weight:700; font-family:inherit;
+  padding:6px 14px; border-radius:8px; cursor:pointer;
+  transition:background .2s;
+}
+.write-btn:hover{ background:var(--accent-deep); }
+
+/* 草稿卡片标记与操作 */
+.draft-badge{
+  display:inline-block; margin-left:6px; vertical-align:2px;
+  background:var(--accent); color:var(--ink);
+  font-size:12px; font-weight:700; padding:1px 8px; border-radius:4px;
+}
+.draft-ops{ margin-left:auto; display:inline-flex; gap:6px; }
+.draft-btn{
+  border:1px solid var(--line); background:var(--bg-warm); color:var(--ink-soft);
+  font-size:12.5px; font-family:inherit; padding:3px 10px; border-radius:6px; cursor:pointer;
+  transition:color .2s,border-color .2s,background .2s;
+}
+.draft-btn:hover{ color:var(--ink); border-color:var(--accent); background:var(--bg-mark); }
+
+/* ===== Hero ===== */
+.hero{
+  max-width:var(--maxw); margin:0 auto;
+  padding:88px 20px 64px;
+  text-align:center;
+}
+.avatar{
+  width:88px; height:88px; margin:0 auto 24px; display:block;
+  border-radius:50%; background:var(--bg-mark);
+  border:1px solid var(--line);
+}
+.hero h1{
+  font-size:40px; font-weight:900; line-height:1.3; letter-spacing:.01em;
+}
+.mark{
+  background:var(--bg-mark); color:var(--ink);
+  padding:.02em .18em; border-radius:4px;
+  box-decoration-break:clone; -webkit-box-decoration-break:clone;
+}
+.hero-sub{
+  margin-top:16px; color:var(--ink-soft); font-size:17px;
+  max-width:36em; margin-left:auto; margin-right:auto;
+}
+.hero-tags{
+  margin-top:22px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;
+}
+.chip{
+  font-size:14px; color:var(--ink-soft);
+  border:1px solid var(--line); border-radius:999px; padding:5px 14px;
+  background:var(--bg-warm);
+}
+.hero-actions{ margin-top:32px; display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+.btn{
+  display:inline-block; padding:10px 26px; border-radius:8px;
+  font-size:15px; font-weight:600; transition:background .2s,color .2s;
+}
+.btn-primary{ background:var(--accent); color:var(--ink); }
+.btn-primary:hover{ background:var(--accent-deep); }
+.btn-ghost{ border:1px solid var(--line); color:var(--ink-soft); }
+.btn-ghost:hover{ border-color:var(--accent); color:var(--ink); }
+
+/* ===== 板块通用 ===== */
+.section{ max-width:var(--maxw); margin:0 auto; padding:56px 20px; border-top:1px solid var(--line); }
+.section-head{ margin-bottom:36px; }
+.section-head .kicker{
+  display:inline-block; font-size:14px; font-weight:700; letter-spacing:.12em;
+  color:var(--accent-deep); margin-bottom:8px;
+}
+.section-head h2{ font-size:28px; font-weight:800; }
+.section-head p{ margin-top:8px; color:var(--ink-soft); font-size:15px; }
+
+/* ===== 本站信息 ===== */
+.info-grid{
+  display:grid; grid-template-columns:1fr 1fr; gap:16px;
+}
+.info-card{
+  background:var(--bg-warm); border:1px solid var(--line);
+  border-radius:12px; padding:22px 22px 20px;
+}
+.info-card h3{
+  font-size:16px; font-weight:700; margin-bottom:10px;
+  display:flex; align-items:center; gap:8px;
+}
+.info-card h3::before{
+  content:""; width:8px; height:8px; border-radius:2px; background:var(--accent);
+  display:inline-block;
+}
+.info-card p{ font-size:14.5px; color:var(--ink-soft); }
+.tag-row{ margin-top:14px; display:flex; flex-wrap:wrap; gap:8px; }
+.tag{ font-size:14px; background:var(--bg-mark); border-radius:4px; padding:3px 10px; color:var(--ink); }
+.kv{ margin-top:12px; }
+.kv div{ display:flex; justify-content:space-between; gap:12px; padding:6px 0; font-size:14px; border-bottom:1px dashed var(--line); }
+.kv div:last-child{ border-bottom:none; }
+.kv dt{ color:var(--ink-soft); }
+.kv dd{ font-weight:600; text-align:right; }
+.link-list{ margin-top:12px; }
+.link-list li{ padding:6px 0; font-size:14.5px; border-bottom:1px dashed var(--line); }
+.link-list li:last-child{ border-bottom:none; }
+.link-list a{ color:var(--ink); transition:color .2s; }
+.link-list a:hover{ color:var(--accent-deep); }
+.link-list .note{ display:block; font-size:14px; color:var(--ink-soft); }
+
+/* 统计条 */
+.stats-bar{
+  margin-top:20px; display:grid; grid-template-columns:repeat(3,1fr);
+  border:1px solid var(--line); border-radius:12px; overflow:hidden;
+}
+.stat{ padding:18px 10px; text-align:center; }
+.stat + .stat{ border-left:1px solid var(--line); }
+.stat b{ display:block; font-size:26px; font-weight:900; color:var(--accent-deep); line-height:1.2; }
+.stat span{ font-size:14px; color:var(--ink-soft); }
+
+/* ===== 时间轴（日记 / 杂谈共用） ===== */
+.timeline{
+  --col-date:88px; --col-dot:20px; --gap:16px;
+  position:relative;
+}
+.timeline::before{
+  content:""; position:absolute; top:10px; bottom:10px;
+  left:calc(var(--col-date) + var(--gap) + var(--col-dot) / 2);
+  width:1px; background:var(--line);
+}
+.post{
+  display:grid;
+  grid-template-columns:var(--col-date) var(--col-dot) 1fr;
+  column-gap:var(--gap);
+  padding:16px 0;
+}
+.post-date{
+  font-size:14px; color:var(--ink-soft); padding-top:5px;
+  font-variant-numeric:tabular-nums; white-space:nowrap;
+}
+.post-dot{
+  justify-self:center; margin-top:8px;
+  width:10px; height:10px; border-radius:50%;
+  background:var(--accent); border:2px solid #fff;
+  box-shadow:0 0 0 1px var(--accent);
+}
+.post h3{ font-size:16px; font-weight:700; line-height:1.5; }
+.post h3 a{ transition:color .2s; }
+.post h3 a:hover{ color:var(--accent-deep); }
+.post .excerpt{
+  margin-top:4px; font-size:14px; color:var(--ink-soft);
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+}
+.post .meta{ margin-top:8px; display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+.post .tag{ background:var(--bg-warm); border:1px solid var(--line); }
+
+/* ===== 更多链接 ===== */
+.more-wrap{ margin-top:24px; text-align:right; }
+.more-link{
+  display:inline-flex; align-items:center; gap:6px;
+  font-size:14px; font-weight:600; color:var(--accent-deep);
+  border-bottom:1px solid var(--accent); padding-bottom:2px;
+  transition:color .2s,border-color .2s;
+}
+.more-link:hover{ color:var(--ink); border-color:var(--ink); }
+
+/* ===== 页脚 ===== */
+.site-footer{
+  border-top:1px solid var(--line);
+  padding:32px 20px 40px; text-align:center;
+  font-size:14px; color:var(--ink-soft);
+}
+.site-footer a{ color:var(--ink-soft); border-bottom:1px solid var(--line); }
+.site-footer a:hover{ color:var(--ink); border-color:var(--accent); }
+
+/* ===== 回到顶部 ===== */
+#backTop{
+  position:fixed; right:22px; bottom:22px; z-index:60;
+  width:42px; height:42px; border-radius:50%;
+  border:1px solid var(--line); background:var(--bg-warm); color:var(--ink);
+  font-size:18px; cursor:pointer;
+  opacity:0; visibility:hidden; transform:translateY(8px);
+  transition:opacity .25s,transform .25s,visibility .25s,background .2s;
+}
+#backTop.show{ opacity:1; visibility:visible; transform:none; }
+#backTop:hover{ background:var(--accent); border-color:var(--accent); }
+
+/* ===== 写文章工作台（弹窗） ===== */
+.panel{ position:fixed; inset:0; z-index:90; display:flex; align-items:center; justify-content:center; padding:20px; }
+.panel[hidden]{ display:none; }
+body.panel-open{ overflow:hidden; }
+.panel-backdrop{ position:absolute; inset:0; background:rgba(38,36,28,.45); }
+.panel-box{
+  position:relative; width:100%; max-width:540px; max-height:90vh; overflow:auto;
+  background:var(--bg); border:1px solid var(--line); border-radius:14px;
+  padding:26px; box-shadow:0 24px 64px rgba(38,36,28,.2);
+}
+.panel-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; }
+.panel-head h2{ font-size:20px; font-weight:800; }
+.panel-close{
+  background:none; border:none; font-size:26px; line-height:1; cursor:pointer;
+  color:var(--ink-soft); padding:2px 8px; border-radius:6px;
+}
+.panel-close:hover{ color:var(--ink); }
+.field{ display:block; margin-bottom:14px; }
+.field > span{ display:block; font-size:14px; font-weight:600; margin-bottom:6px; }
+.field input, .field select, .field textarea{
+  width:100%; padding:9px 12px; border:1px solid var(--line); border-radius:8px;
+  font-size:16px; font-family:inherit; color:var(--ink); background:var(--bg);
+}
+.field input:focus, .field select:focus, .field textarea:focus{ outline:2px solid var(--accent); border-color:transparent; }
+.form-row{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.form-actions{ display:flex; gap:10px; flex-wrap:wrap; }
+.form-actions .btn{ flex:1; text-align:center; }
+.panel-hint{
+  margin-top:16px; font-size:14px; color:var(--ink-soft);
+  background:var(--bg-warm); border:1px dashed var(--line); border-radius:8px;
+  padding:10px 12px; line-height:1.65;
+}
+.panel-export{ margin-top:12px; }
+#dExport{ width:100%; }
+
+/* ===== Toast 演示提示 ===== */
+#toast{
+  position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(16px);
+  background:var(--ink); color:#fff; font-size:13.5px;
+  padding:10px 20px; border-radius:8px; z-index:80;
+  opacity:0; visibility:hidden; transition:opacity .25s,transform .25s,visibility .25s;
+  max-width:calc(100vw - 40px); text-align:center;
+}
+#toast.show{ opacity:1; visibility:visible; transform:translateX(-50%) translateY(0); }
+
+/* ===== 响应式 ===== */
+@media (max-width:640px){
+  .hero{ padding:64px 20px 48px; }
+  .hero h1{ font-size:32px; }
+  .nav-links{ gap:12px; }
+  .nav-links a{
+    font-size:14px; display:inline-flex; align-items:center; justify-content:center;
+    min-width:44px; min-height:44px;
+  }
+  .write-btn{ min-height:44px; padding:6px 12px; }
+  .logo{ display:inline-flex; align-items:center; min-height:44px; }
+  .more-link{ padding:10px 0; }
+  .info-grid{ grid-template-columns:1fr; }
+  .timeline{ --col-date:72px; --col-dot:20px; --gap:12px; }
+  .post h3{ font-size:15px; }
+  .stats-bar b{ font-size:22px; }
+}
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *{ transition:none !important; animation:none !important; }
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">跳至主要内容</a>
+
+<!-- ===== 顶部导航 ===== -->
+<header class="site-header">
+  <div class="nav-inner">
+    <a class="logo" href="#top" aria-label="返回首页"><span class="logo-dot" aria-hidden="true"></span>L的站点</a>
+    <nav class="nav-links" aria-label="站内导航">
+      <a href="#info" data-nav>本站信息</a>
+      <a href="#diary" data-nav>日记</a>
+      <a href="#notes" data-nav>杂谈</a>
+      <button type="button" id="writeBtn" class="write-btn">写文章</button>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<span id="top" aria-hidden="true"></span>
+
+<!-- ===== 视图：Hero ===== -->
+<section class="hero" aria-label="自我介绍">
+  <!-- TODO: 把下方 SVG 头像替换为你的照片：<img class="avatar" src="assets/avatar.jpg" alt="我的头像"> -->
+  <svg class="avatar" viewBox="0 0 88 88" aria-hidden="true" role="presentation">
+    <circle cx="44" cy="44" r="43" fill="#FFF1C2"/>
+    <circle cx="44" cy="34" r="14" fill="#F5B800"/>
+    <path d="M20 68a26 26 0 0 1 48 0" fill="#F5B800"/>
+  </svg>
+  <h1>你好，我是<span class="mark">L</span></h1>
+  <p class="hero-sub">这个小小的站点，用来存放关于我的信息、每天的日记，以及漫无边际的杂谈。</p>
+  <div class="hero-tags">
+    <span class="chip">前端开发</span>
+    <span class="chip">绘画</span>
+    <span class="chip">阅读</span>
+    <span class="chip">旅行</span>
+  </div>
+  <div class="hero-actions">
+    <a class="btn btn-primary" href="#info">了解本站</a>
+    <a class="btn btn-ghost" href="#diary">看看最近</a>
+  </div>
+</section>
+
+<!-- ===== 视图：本站信息 ===== -->
+<section id="info" class="section" aria-labelledby="info-title">
+  <header class="section-head">
+    <span class="kicker">ABOUT</span>
+    <h2 id="info-title">本站信息</h2>
+    <p>关于这个站点和站主的一些说明。</p>
+  </header>
+
+  <div class="info-grid">
+    <!-- TODO: 替换为你的真实介绍 -->
+    <article class="info-card">
+      <h3>关于我</h3>
+      <p>你好，我是L。</p>
+      <div class="tag-row">
+        <span class="tag">JavaScript</span>
+        <span class="tag">HTML/CSS</span>
+        <span class="tag">Git</span>
+        <span class="tag">绘画</span>
+      </div>
+    </article>
+
+    <article class="info-card">
+      <h3>站点档案</h3>
+      <dl class="kv">
+        <div><dt>建站时间</dt><dd>2026 年 9 月</dd></div>
+        <div><dt>托管平台</dt><dd>GitHub Pages</dd></div>
+        <div><dt>技术栈</dt><dd>纯 HTML / CSS / JS</dd></div>
+        <div><dt>主题</dt><dd>豆包写的，我是代码包的搬运工，感谢现代科技</dd></div>
+      </dl>
+    </article>
+
+    <article class="info-card">
+      <h3>联系我</h3>
+      <p>欢迎交流，工作与生活上的事情都可以写信给我。</p>
+      <div class="tag-row">
+        <!-- TODO: 替换为真实联系方式 -->
+        <span class="tag">qq：3790546778</span>
+        <span class="tag">github.com/LFM2008</span>
+        <span class="tag">邮箱</span>
+      </div>
+    </article>
+
+    <article class="info-card">
+      <h3>友情链接</h3>
+      <ul class="link-list">
+        <!-- TODO: 替换为你的友链；data-demo 是模板演示，正式使用时换成真实 href -->
+        <li><a href="https://www.xiaohongshu.com/user/profile/6a436a66000000000f039401" target="_blank">xhs主页<span class="note">堆放绘画和设计作品</span></a></li>
+        
+      </ul>
+    </article>
+  </div>
+
+  <div class="stats-bar" role="list" aria-label="站点统计">
+    <div class="stat" role="listitem"><b id="statDiary">–</b><span>篇日记</span></div>
+    <div class="stat" role="listitem"><b id="statNotes">–</b><span>篇杂谈</span></div>
+    <div class="stat" role="listitem"><b id="statDays">–</b><span>建站天数</span></div>
+  </div>
+</section>
+
+<!-- ===== 视图：日记 ===== -->
+<section id="diary" class="section" aria-labelledby="diary-title">
+  <header class="section-head">
+    <span class="kicker">DIARY</span>
+    <h2 id="diary-title">日记</h2>
+    <p>按时间倒序排列。</p>
+  </header>
+
+  <ul class="timeline">
+    <!-- TODO: 把示例条目替换为你自己的日记；复制 li.post 即可新增 -->
+    <li class="post">
+      <time class="post-date" datetime="2026-09-12">2026-09-12</time>
+      <span class="post-dot" aria-hidden="true"></span>
+      <div class="post-body">
+        <h3><a href="#" data-demo="模板演示：请替换为单篇日记链接">周末爬了香山，山顶的风很凉</a></h3>
+        <p class="excerpt">六点起床，赶第一班地铁。上山的路比想象中陡，但到山顶那一刻，整座城市都在脚下铺开……</p>
+        <div class="meta"><span class="tag">生活</span><span class="tag">户外</span></div>
+      </div>
+    </li>
+    <li class="post">
+      <time class="post-date" datetime="2026-09-03">2026-09-03</time>
+      <span class="post-dot" aria-hidden="true"></span>
+      <div class="post-body">
+        <h3><a href="#" data-demo="模板演示：请替换为单篇日记链接">给博客换了新的配色</a></h3>
+        <p class="excerpt">折腾了一晚上，最后选定白底配黄。清爽，像秋天下午四点的光。</p>
+        <div class="meta"><span class="tag">折腾</span><span class="tag">博客</span></div>
+      </div>
+    </li>
+    <li class="post">
+      <time class="post-date" datetime="2026-08-27">2026-08-27</time>
+      <span class="post-dot" aria-hidden="true"></span>
+      <div class="post-body">
+        <h3><a href="#" data-demo="模板演示：请替换为单篇日记链接">读完《百年孤独》，失眠到两点</a></h3>
+        <p class="excerpt">马孔多在下雨，窗外也在下雨。有些书读到最后，会觉得跟里面的人一起变老。</p>
+        <div class="meta"><span class="tag">阅读</span></div>
+      </div>
+    </li>
+    <li class="post">
+      <time class="post-date" datetime="2026-08-15">2026-08-15</time>
+      <span class="post-dot" aria-hidden="true"></span>
+      <div class="post-body">
+        <h3><a href="#" data-demo="模板演示：请替换为单篇日记链接">第一次用 Git 协作，差点把别人的代码弄丢</a></h3>
+        <p class="excerpt">好在有 reflog 兜底，虚惊一场。教训：pull 之前先看 status。</p>
+        <div class="meta"><span class="tag">编程</span><span class="tag">Git</span></div>
+      </div>
+    </li>
+  </ul>
+
+  <div class="more-wrap">
+    <a class="more-link" href="#" data-demo="模板演示：请替换为日记列表页链接">查看全部日记</a>
+  </div>
+</section>
+
+<!-- ===== 视图：杂谈 ===== -->
+<section id="notes" class="section" aria-labelledby="notes-title">
+  <header class="section-head">
+    <span class="kicker">NOTES</span>
+    <h2 id="notes-title">杂谈</h2>
+    <p>不成体系的思考，想到哪儿写到哪儿。</p>
+  </header>
+
+  <ul class="timeline">
+    <!-- TODO: 把示例条目替换为你自己的杂谈；复制 li.post 即可新增 -->
+    <li class="post">
+      <time class="post-date" datetime="2026-09-08">2026-09-08</time>
+      <span class="post-dot" aria-hidden="true"></span>
+      <div class="post-body">
+        <h3><a href="#" data-demo="模板演示：请替换为单篇杂谈链接">为什么我坚持用最朴素的工具</a></h3>
+        <p class="excerpt">工具越简单，注意力越能回到事情本身。一个文本编辑器、一张纸，往往比一整套方法论有用。</p>
+        <div class="meta"><span class="tag">观点</span></div>
+      </div>
+    </li>
+    <li class="post">
+      <time class="post-date" datetime="2026-08-30">2026-08-30</time>
+      <span class="post-dot" aria-hidden="true"></span>
+      <div class="post-body">
+        <h3><a href="#" data-demo="模板演示：请替换为单篇杂谈链接">关于「记录」的一点想法</a></h3>
+        <p class="excerpt">很多当时觉得惊天动地的事，过三个月再看，只剩下两三行。记录不是为了保存，是为了让记忆有锚点。</p>
+        <div class="meta"><span class="tag">随笔</span></div>
+      </div>
+    </li>
+    <li class="post">
+      <time class="post-date" datetime="2026-08-18">2026-08-18</time>
+      <span class="post-dot" aria-hidden="true"></span>
+      <div class="post-body">
+        <h3><a href="#" data-demo="模板演示：请替换为单篇杂谈链接">好的默认值，胜过聪明的配置</a></h3>
+        <p class="excerpt">无论是软件还是生活，把默认路径设计好，大多数时候人们只要顺着走就行了。</p>
+        <div class="meta"><span class="tag">观点</span></div>
+      </div>
+    </li>
+    <li class="post">
+      <time class="post-date" datetime="2026-07-22">2026-07-22</time>
+      <span class="post-dot" aria-hidden="true"></span>
+      <div class="post-body">
+        <h3><a href="#" data-demo="模板演示：请替换为单篇杂谈链接">摄影是给时间按下暂停键</a></h3>
+        <p class="excerpt">快门按下的瞬间，光线、表情、空气里的灰尘都被固定下来。后来翻看，才懂当时的好。</p>
+        <div class="meta"><span class="tag">摄影</span></div>
+      </div>
+    </li>
+  </ul>
+
+  <div class="more-wrap">
+    <a class="more-link" href="#" data-demo="模板演示：请替换为杂谈列表页链接">查看全部杂谈</a>
+  </div>
+</section>
+
+</main>
+
+<!-- ===== 页脚 ===== -->
+<footer class="site-footer">
+  <p>© <span id="year">2026</span> 某某 · 由 <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a> 驱动 · 用黄色建成</p>
+  <!-- TODO: 如果有备案号，把下面这行取消注释并替换 -->
+  <!-- <p>京ICP备00000000号-1</p> -->
+</footer>
+
+<button id="backTop" aria-label="回到顶部">↑</button>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<!-- ===== 写文章工作台（本地草稿 + 导出发布） ===== -->
+<div class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="panel-title" hidden>
+  <div class="panel-backdrop" data-close></div>
+  <div class="panel-box">
+    <header class="panel-head">
+      <h2 id="panel-title">写文章</h2>
+      <button type="button" class="panel-close" data-close aria-label="关闭">×</button>
+    </header>
+    <form id="draftForm">
+      <label class="field">
+        <span>标题（必填）</span>
+        <input type="text" id="dTitle" maxlength="60" placeholder="给文章起个标题" required>
+      </label>
+      <div class="form-row">
+        <label class="field">
+          <span>日期</span>
+          <input type="date" id="dDate">
+        </label>
+        <label class="field">
+          <span>板块</span>
+          <select id="dSection">
+            <option value="diary">日记</option>
+            <option value="notes">杂谈</option>
+          </select>
+        </label>
+      </div>
+      <label class="field">
+        <span>标签（用逗号分隔）</span>
+        <input type="text" id="dTags" placeholder="生活, 阅读">
+      </label>
+      <label class="field">
+        <span>摘要</span>
+        <textarea id="dExcerpt" rows="3" maxlength="200" placeholder="一两句话概括这篇文章"></textarea>
+      </label>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">保存草稿</button>
+        <button type="button" id="dCopy" class="btn btn-ghost">复制文章代码</button>
+      </div>
+    </form>
+    <p class="panel-hint">草稿保存在当前浏览器本地，保存后立即显示在下方对应板块。要让所有人访问：点「导出完整 HTML」，用下载的 index.html 替换仓库文件并 git push，GitHub Pages 会自动发布。</p>
+    <div class="panel-export">
+      <button type="button" id="dExport" class="btn btn-primary">导出完整 HTML</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---- Toast：演示占位链接的反馈，正式使用请把 data-demo 换成真实 href ---- */
+  var toast = document.getElementById("toast");
+  var toastTimer = null;
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.classList.remove("show"); }, 2200);
+  }
+  document.addEventListener("click", function (e) {
+    var el = e.target.closest("[data-demo]");
+    if (el) {
+      e.preventDefault();
+      showToast(el.getAttribute("data-demo"));
+    }
+  });
+
+  /* ---- 年份自动更新 ---- */
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  /* ---- 站点统计：文章数从 DOM 实时统计，新增文章自动更新 ---- */
+  function countPosts(selector) {
+    return document.querySelectorAll(selector).length;
+  }
+  document.getElementById("statDiary").textContent = countPosts("#diary .post");
+  document.getElementById("statNotes").textContent = countPosts("#notes .post");
+
+  /* 建站天数：以 2026-01-01 为示例起始日，请改为你的真实建站日期 */
+  var start = new Date(2026, 8, 15); // 注意：月份从 0 开始，0 表示 1 月
+  var today = new Date();
+  var days = Math.floor((today - start) / (1000 * 60 * 60 * 24));
+  document.getElementById("statDays").textContent = days >= 0 ? days : 0;
+
+  /* ---- 回到顶部 ---- */
+  var backTop = document.getElementById("backTop");
+  window.addEventListener("scroll", function () {
+    backTop.classList.toggle("show", window.scrollY > 600);
+  }, { passive: true });
+  backTop.addEventListener("click", function () {
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) {
+      window.scrollTo(0, 0);
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  });
+
+  /* ---- 导航高亮：滚动时标记当前板块 ---- */
+  var navLinks = document.querySelectorAll(".nav-links a[data-nav]");
+  var sections = ["info", "diary", "notes"].map(function (id) {
+    return document.getElementById(id);
+  });
+  function setActive(id) {
+    navLinks.forEach(function (link) {
+      var active = link.getAttribute("href") === "#" + id;
+      if (active) {
+        link.setAttribute("aria-current", "true");
+      } else {
+        link.removeAttribute("aria-current");
+      }
+    });
+  }
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) setActive(entry.target.id);
+      });
+    }, { rootMargin: "-40% 0px -55% 0px" });
+    sections.forEach(function (sec) { if (sec) io.observe(sec); });
+  }
+  /* ---- 写文章工作台：本地草稿 + 导出合并版 HTML ---- */
+  var DRAFT_KEY = "hp-drafts";
+  var panel = document.getElementById("panel");
+  var panelOpen = false;
+
+  function escapeHtml(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  function pad2(n) { return n < 10 ? "0" + n : "" + n; }
+  function todayStr() {
+    var t = new Date();
+    return t.getFullYear() + "-" + pad2(t.getMonth() + 1) + "-" + pad2(t.getDate());
+  }
+  function loadDrafts() {
+    try { return JSON.parse(localStorage.getItem(DRAFT_KEY) || "[]"); } catch (e) { return []; }
+  }
+  function saveDrafts(list) {
+    try { localStorage.setItem(DRAFT_KEY, JSON.stringify(list)); } catch (e) { /* 隐私模式等场景忽略 */ }
+  }
+  /* 从当前 DOM 收集已内联的草稿：导出文件中自带草稿，换任何浏览器都能看到 */
+  function collectInlineDrafts() {
+    var out = [];
+    document.querySelectorAll(".post[data-draft]").forEach(function (li) {
+      try { out.push(JSON.parse(li.getAttribute("data-draft"))); } catch (e) {}
+    });
+    return out;
+  }
+  /* 生成可直接粘贴进源码的标准文章代码 */
+  function generatePostHTML(d) {
+    var tags = (d.tags || []).map(function (t) {
+      return '<span class="tag">' + escapeHtml(t) + "</span>";
+    }).join("");
+    var kind = d.section === "diary" ? "日记" : "杂谈";
+    return '<li class="post">\n' +
+      '  <time class="post-date" datetime="' + escapeHtml(d.date) + '">' + escapeHtml(d.date) + "</time>\n" +
+      '  <span class="post-dot" aria-hidden="true"></span>\n' +
+      '  <div class="post-body">\n' +
+      '    <h3><a href="#" data-demo="模板演示：请替换为单篇' + kind + '链接">' + escapeHtml(d.title) + "</a></h3>\n" +
+      '    <p class="excerpt">' + escapeHtml(d.excerpt || "") + "</p>\n" +
+      '    <div class="meta">' + tags + "</div>\n" +
+      "  </div>\n" +
+      "</li>";
+  }
+  function renderDrafts() {
+    /* 合并 DOM 内联草稿与本地草稿，按 id 去重，按日期倒序 */
+    var map = {};
+    collectInlineDrafts().concat(loadDrafts()).forEach(function (d) { if (d && d.id) map[d.id] = d; });
+    var drafts = Object.keys(map).map(function (k) { return map[k]; });
+    drafts.sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : 0; });
+    /* 先清空旧的草稿节点，避免重复渲染 */
+    document.querySelectorAll(".post[data-draft]").forEach(function (el) { el.remove(); });
+    drafts.forEach(function (d) {
+      var li = document.createElement("li");
+      li.className = "post";
+      li.setAttribute("data-draft", JSON.stringify(d));
+      var tags = (d.tags || []).map(function (t) {
+        return '<span class="tag">' + escapeHtml(t) + "</span>";
+      }).join("");
+      li.innerHTML =
+        '<time class="post-date" datetime="' + escapeHtml(d.date) + '">' + escapeHtml(d.date) + "</time>" +
+        '<span class="post-dot" aria-hidden="true"></span>' +
+        '<div class="post-body">' +
+        '  <h3><a href="#" data-demo="草稿尚未发布：导出 HTML 并推送后即可公开访问">' + escapeHtml(d.title) +
+        '</a><span class="draft-badge">草稿</span></h3>' +
+        '  <p class="excerpt">' + escapeHtml(d.excerpt || "") + "</p>" +
+        '  <div class="meta">' + tags + '<span class="draft-ops">' +
+        '<button type="button" class="draft-btn" data-act="copy">复制代码</button>' +
+        '<button type="button" class="draft-btn" data-act="del">删除</button>' +
+        "</span></div>" +
+        "</div>";
+      li.querySelector('[data-act="copy"]').addEventListener("click", function () {
+        copyText(generatePostHTML(d));
+        showToast("文章代码已复制，粘贴到 index.html 对应板块即可");
+      });
+      li.querySelector('[data-act="del"]').addEventListener("click", function () {
+        saveDrafts(loadDrafts().filter(function (x) { return x.id !== d.id; }));
+        renderDrafts();
+        showToast("草稿已删除");
+      });
+      var target = document.getElementById(d.section === "diary" ? "diary" : "notes");
+      if (target) target.querySelector(".timeline").appendChild(li);
+    });
+  }
+  function copyText(text) {
+    function fallbackCopy(t) {
+      var ta = document.createElement("textarea");
+      ta.value = t;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand("copy"); showToast("已复制到剪贴板"); }
+      catch (e) { showToast("复制失败，请手动选择复制"); }
+      document.body.removeChild(ta);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(
+        function () { showToast("已复制到剪贴板"); },
+        function () { fallbackCopy(text); }
+      );
+    } else {
+      fallbackCopy(text);
+    }
+  }
+  function openPanel() {
+    panel.hidden = false;
+    document.body.classList.add("panel-open");
+    panelOpen = true;
+    document.getElementById("dDate").value = todayStr();
+    document.getElementById("dTitle").focus();
+  }
+  function closePanel() {
+    panel.hidden = true;
+    document.body.classList.remove("panel-open");
+    panelOpen = false;
+  }
+  document.getElementById("writeBtn").addEventListener("click", openPanel);
+  panel.querySelectorAll("[data-close]").forEach(function (el) {
+    el.addEventListener("click", closePanel);
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && panelOpen) closePanel();
+  });
+
+  /* 保存草稿 */
+  document.getElementById("draftForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var title = document.getElementById("dTitle").value.trim();
+    if (!title) { showToast("请先填写文章标题"); return; }
+    var draft = {
+      id: "d" + Date.now() + Math.random().toString(36).slice(2, 6),
+      date: document.getElementById("dDate").value || todayStr(),
+      section: document.getElementById("dSection").value,
+      title: title,
+      tags: document.getElementById("dTags").value.split(/[,，]/).map(function (s) { return s.trim(); }).filter(Boolean),
+      excerpt: document.getElementById("dExcerpt").value.trim()
+    };
+    var list = loadDrafts();
+    list.push(draft);
+    saveDrafts(list);
+    renderDrafts();
+    e.target.reset();
+    document.getElementById("dDate").value = todayStr();
+    showToast("草稿已保存，已显示在下方对应板块");
+  });
+
+  /* 复制当前表单生成的文章代码 */
+  document.getElementById("dCopy").addEventListener("click", function () {
+    var title = document.getElementById("dTitle").value.trim();
+    if (!title) { showToast("请先填写文章标题"); return; }
+    copyText(generatePostHTML({
+      id: "preview",
+      date: document.getElementById("dDate").value || todayStr(),
+      section: document.getElementById("dSection").value,
+      title: title,
+      tags: document.getElementById("dTags").value.split(/[,，]/).map(function (s) { return s.trim(); }).filter(Boolean),
+      excerpt: document.getElementById("dExcerpt").value.trim()
+    }));
+  });
+
+  /* 导出合并后的完整 HTML：草稿已内联进 DOM，序列化即可 */
+  document.getElementById("dExport").addEventListener("click", function () {
+    closePanel();
+    renderDrafts();
+    document.getElementById("backTop").classList.remove("show");
+    toast.classList.remove("show");
+    var html = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+    var blob = new Blob([html], { type: "text/html;charset=utf-8" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "index.html";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+    showToast("已导出 index.html：替换仓库文件并 git push 即完成发布");
+  });
+
+  /* 页面加载时渲染本地草稿 */
+  renderDrafts();
+})();
+</script>
+</body>
+</html>
