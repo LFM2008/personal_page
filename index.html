@@ -230,6 +230,11 @@ ul{ list-style:none; }
   transition:color .2s,border-color .2s;
 }
 .more-link:hover{ color:var(--ink); border-color:var(--ink); }
+.empty-tip{
+  margin:20px 0 0; padding:24px 16px; text-align:center;
+  color:var(--ink-soft); font-size:14px;
+  background:var(--bg-warm); border:1px dashed var(--line); border-radius:8px;
+}
 
 /* ===== 页脚 ===== */
 .site-footer{
@@ -1182,47 +1187,11 @@ body.panel-open{ overflow:hidden; }
   </header>
 
   <ul class="timeline">
-    <!-- TODO: 把示例条目替换为你自己的日记；复制 li.post 即可新增 -->
-    <li class="post">
-      <time class="post-date" datetime="2026-09-12">2026-09-12</time>
-      <span class="post-dot" aria-hidden="true"></span>
-      <div class="post-body">
-        <h3><a href="#" data-demo="模板演示：请替换为单篇日记链接">周末爬了香山，山顶的风很凉</a></h3>
-        <p class="excerpt">六点起床，赶第一班地铁。上山的路比想象中陡，但到山顶那一刻，整座城市都在脚下铺开……</p>
-        <div class="meta"><span class="tag">生活</span><span class="tag">户外</span></div>
-      </div>
-    </li>
-    <li class="post">
-      <time class="post-date" datetime="2026-09-03">2026-09-03</time>
-      <span class="post-dot" aria-hidden="true"></span>
-      <div class="post-body">
-        <h3><a href="#" data-demo="模板演示：请替换为单篇日记链接">给博客换了新的配色</a></h3>
-        <p class="excerpt">折腾了一晚上，最后选定白底配黄。清爽，像秋天下午四点的光。</p>
-        <div class="meta"><span class="tag">折腾</span><span class="tag">博客</span></div>
-      </div>
-    </li>
-    <li class="post">
-      <time class="post-date" datetime="2026-08-27">2026-08-27</time>
-      <span class="post-dot" aria-hidden="true"></span>
-      <div class="post-body">
-        <h3><a href="#" data-demo="模板演示：请替换为单篇日记链接">读完《百年孤独》，失眠到两点</a></h3>
-        <p class="excerpt">马孔多在下雨，窗外也在下雨。有些书读到最后，会觉得跟里面的人一起变老。</p>
-        <div class="meta"><span class="tag">阅读</span></div>
-      </div>
-    </li>
-    <li class="post">
-      <time class="post-date" datetime="2026-08-15">2026-08-15</time>
-      <span class="post-dot" aria-hidden="true"></span>
-      <div class="post-body">
-        <h3><a href="#" data-demo="模板演示：请替换为单篇日记链接">第一次用 Git 协作，差点把别人的代码弄丢</a></h3>
-        <p class="excerpt">好在有 reflog 兜底，虚惊一场。教训：pull 之前先看 status。</p>
-        <div class="meta"><span class="tag">编程</span><span class="tag">Git</span></div>
-      </div>
-    </li>
   </ul>
+  <p class="empty-tip" hidden>这里还没有日记，点击右上角「写文章」发布第一篇。</p>
 
   <div class="more-wrap">
-    <a class="more-link" href="#" data-demo="模板演示：请替换为日记列表页链接">查看全部日记</a>
+    <a class="more-link" href="archive.html?kind=diary">查看全部日记</a>
   </div>
 </section>
 
@@ -1235,47 +1204,11 @@ body.panel-open{ overflow:hidden; }
   </header>
 
   <ul class="timeline">
-    <!-- TODO: 把示例条目替换为你自己的杂谈；复制 li.post 即可新增 -->
-    <li class="post">
-      <time class="post-date" datetime="2026-09-08">2026-09-08</time>
-      <span class="post-dot" aria-hidden="true"></span>
-      <div class="post-body">
-        <h3><a href="#" data-demo="模板演示：请替换为单篇杂谈链接">为什么我坚持用最朴素的工具</a></h3>
-        <p class="excerpt">工具越简单，注意力越能回到事情本身。一个文本编辑器、一张纸，往往比一整套方法论有用。</p>
-        <div class="meta"><span class="tag">观点</span></div>
-      </div>
-    </li>
-    <li class="post">
-      <time class="post-date" datetime="2026-08-30">2026-08-30</time>
-      <span class="post-dot" aria-hidden="true"></span>
-      <div class="post-body">
-        <h3><a href="#" data-demo="模板演示：请替换为单篇杂谈链接">关于「记录」的一点想法</a></h3>
-        <p class="excerpt">很多当时觉得惊天动地的事，过三个月再看，只剩下两三行。记录不是为了保存，是为了让记忆有锚点。</p>
-        <div class="meta"><span class="tag">随笔</span></div>
-      </div>
-    </li>
-    <li class="post">
-      <time class="post-date" datetime="2026-08-18">2026-08-18</time>
-      <span class="post-dot" aria-hidden="true"></span>
-      <div class="post-body">
-        <h3><a href="#" data-demo="模板演示：请替换为单篇杂谈链接">好的默认值，胜过聪明的配置</a></h3>
-        <p class="excerpt">无论是软件还是生活，把默认路径设计好，大多数时候人们只要顺着走就行了。</p>
-        <div class="meta"><span class="tag">观点</span></div>
-      </div>
-    </li>
-    <li class="post">
-      <time class="post-date" datetime="2026-07-22">2026-07-22</time>
-      <span class="post-dot" aria-hidden="true"></span>
-      <div class="post-body">
-        <h3><a href="#" data-demo="模板演示：请替换为单篇杂谈链接">摄影是给时间按下暂停键</a></h3>
-        <p class="excerpt">快门按下的瞬间，光线、表情、空气里的灰尘都被固定下来。后来翻看，才懂当时的好。</p>
-        <div class="meta"><span class="tag">摄影</span></div>
-      </div>
-    </li>
   <li class="post"><time class="post-date" datetime="2026-09-09">2026-09-09</time><span class="post-dot" aria-hidden="true"></span><div class="post-body">  <h3><a href="posts/2026-09-09-《回答》.html">《回答》</a></h3>  <p class="excerpt">作者：北岛</p>  <div class="meta"><span class="tag">诗歌</span></div></div></li></ul>
+  <p class="empty-tip" hidden>这里还没有杂谈，点击右上角「写文章」发布第一篇。</p>
 
   <div class="more-wrap">
-    <a class="more-link" href="#" data-demo="模板演示：请替换为杂谈列表页链接">查看全部杂谈</a>
+    <a class="more-link" href="archive.html?kind=notes">查看全部杂谈</a>
   </div>
 </section>
 
@@ -1784,6 +1717,7 @@ body.panel-open{ overflow:hidden; }
   document.getElementById("dExport").addEventListener("click", async function () {
     closePanel();
     renderDrafts();
+    updateEmptyTips();
     /* 收集当前全部草稿（含 DOM 内联 + 本地） */
     var map = {};
     collectInlineDrafts().concat(loadDrafts()).forEach(function (d) { if (d && d.id) map[d.id] = d; });
@@ -1819,6 +1753,7 @@ body.panel-open{ overflow:hidden; }
     document.getElementById("backTop").classList.remove("show");
     toast.classList.remove("show");
     files.push({ name: "index.html", content: "<!DOCTYPE html>\n" + document.documentElement.outerHTML });
+    files.push({ name: "archive.html", content: buildArchiveHTML() });
     /* 5. 写入：已选导出文件夹则直接写入，否则回退为浏览器下载 */
     var viaDir = false;
     if (exportDir) {
@@ -1835,9 +1770,124 @@ body.panel-open{ overflow:hidden; }
       files.forEach(function (f) { downloadFile(f.name, f.content); });
     }
     showToast(viaDir
-      ? "已导出到所选文件夹（" + exportDir.name + "）：主页 + " + drafts.length + " 篇文章页；上传时把文章页放进仓库的 posts/ 文件夹"
-      : "已下载 1 个主页 + " + drafts.length + " 篇文章页：上传时把文章页文件名写成 posts/文件名.html（GitHub 会自动建 posts 文件夹），再替换 index.html");
+      ? "已导出到所选文件夹（" + exportDir.name + "）：主页 + 列表页 + " + drafts.length + " 篇文章页；上传时把文章页放进仓库的 posts/ 文件夹"
+      : "已下载 1 个主页 + 1 个列表页 + " + drafts.length + " 篇文章页：上传时把文章页文件名写成 posts/文件名.html（GitHub 会自动建 posts 文件夹），再替换 index.html 和 archive.html");
   });
+
+  /* ---- 空板块提示 ---- */
+  function updateEmptyTips() {
+    document.querySelectorAll("section[id=diary] .empty-tip, section[id=notes] .empty-tip").forEach(function (tip) {
+      var sec = tip.closest("section");
+      tip.hidden = !!(sec && sec.querySelectorAll(".post").length > 0);
+    });
+  }
+  updateEmptyTips();
+
+  /* ---- 列表页生成：把发布后的主页卡片解析为 archive.html ---- */
+  var ARCHIVE_TEMPLATE = `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- favicon：内联 SVG，黄色圆 + 白点，与主页一致 -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%2714%27 fill=%27%23F5B800%27/%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%275%27 fill=%27%23FFFFFF%27/%3E%3C/svg%3E">
+<title>文章列表 · __SITE__</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#fff;color:#26241C;font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased}
+.top{max-width:760px;margin:0 auto;padding:24px 20px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.back{color:#D99E00;font-size:14px;font-weight:600;text-decoration:none;border-bottom:1px solid #F5B800;padding-bottom:2px}
+.back:hover{color:#26241C;border-color:#26241C}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tabs a{font-size:14px;font-weight:600;color:#7C7561;text-decoration:none;padding:4px 14px;border:1px solid #EFE7D2;border-radius:999px;transition:color .2s,border-color .2s,background .2s}
+.tabs a:hover{color:#26241C;border-color:#B9B09A}
+.tabs a.on{background:#F5B800;border-color:#F5B800;color:#26241C}
+.wrap{max-width:760px;margin:0 auto;padding:36px 20px 64px}
+h1{font-size:28px;font-weight:900;line-height:1.4}
+.desc{margin-top:8px;font-size:14px;color:#7C7561}
+.list{margin-top:24px;list-style:none}
+.post{display:grid;grid-template-columns:110px 1fr;gap:18px;padding:18px 0;border-bottom:1px solid #EFE7D2}
+.post-date{font-size:14px;color:#7C7561;padding-top:4px}
+.post h3{font-size:17px;font-weight:700;line-height:1.5}
+.post h3 a{color:#26241C;text-decoration:none;border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
+.post h3 a:hover{color:#D99E00;border-color:#F5B800}
+.excerpt{margin-top:6px;font-size:14.5px;color:#7C7561}
+.meta{margin-top:8px;display:flex;gap:8px;flex-wrap:wrap}
+.tag{font-size:13px;background:#FFF1C2;border:1px solid #EFE7D2;border-radius:4px;padding:2px 10px;color:#26241C}
+.empty{margin-top:28px;padding:32px 16px;text-align:center;color:#7C7561;font-size:14px;background:#FFFBEF;border:1px dashed #EFE7D2;border-radius:8px}
+.foot{border-top:1px solid #EFE7D2;padding:28px 20px 40px;text-align:center;font-size:14px;color:#7C7561}
+@media (max-width:640px){.post{grid-template-columns:1fr;gap:6px}.post-date{padding-top:0}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="back" href="index.html">← 返回首页</a>
+  <nav class="tabs">
+    <a href="archive.html" id="tab-all">全部</a>
+    <a href="archive.html?kind=diary" id="tab-diary">日记</a>
+    <a href="archive.html?kind=notes" id="tab-notes">杂谈</a>
+  </nav>
+</header>
+<main class="wrap">
+  <h1 id="pageTitle">全部文章</h1>
+  <p class="desc">按时间倒序排列。</p>
+  <ul class="list" id="list"></ul>
+  <p class="empty" id="empty" hidden>这里还没有内容，点击右上角「写文章」发布第一篇。</p>
+</main>
+<footer class="foot">© <span id="yr"></span> __SITE__ · 由 GitHub Pages 驱动</footer>
+<script>
+var POSTS = /*__POSTS__*/;
+var kind = (location.search.match(/[?&]kind=(\w+)/) || [])[1] || "all";
+var TITLES = { all: "全部文章", diary: "日记", notes: "杂谈" };
+document.getElementById("pageTitle").textContent = TITLES[kind] || "文章";
+document.getElementById("yr").textContent = new Date().getFullYear();
+var tab = document.getElementById(kind === "all" ? "tab-all" : "tab-" + kind);
+if (tab) tab.className = "on";
+function esc(s) { var d = document.createElement("div"); d.textContent = s == null ? "" : s; return d.innerHTML; }
+var items = kind === "all" ? POSTS : POSTS.filter(function (p) { return p.kind === kind; });
+if (!items.length) { document.getElementById("empty").hidden = false; }
+var list = document.getElementById("list");
+items.forEach(function (p) {
+  var li = document.createElement("li");
+  li.className = "post";
+  var tags = (p.tags || []).map(function (t) { return '<span class="tag">' + esc(t) + "</span>"; }).join("");
+  li.innerHTML =
+    '<time class="post-date">' + esc(p.date) + "</time>" +
+    '<div class="post-body"><h3><a href="' + esc(p.href) + '">' + esc(p.title) + "</a></h3>" +
+    (p.excerpt ? '<p class="excerpt">' + esc(p.excerpt) + "</p>" : "") +
+    '<div class="meta">' + tags + "</div></div>";
+  list.appendChild(li);
+});
+<\/script>
+</body>
+</html>`;
+  function buildArchiveHTML() {
+    var posts = [];
+    document.querySelectorAll("section[id=diary] .post, section[id=notes] .post").forEach(function (li) {
+      var sec = li.closest("section");
+      if (!sec) return;
+      var kind = sec.id === "notes" ? "notes" : "diary";
+      var t = li.querySelector("time");
+      var a = li.querySelector("h3 a");
+      var ex = li.querySelector(".excerpt");
+      if (!a) return;
+      var href = a.getAttribute("href");
+      if (!href || href === "#") return;
+      posts.push({
+        date: t ? (t.getAttribute("datetime") || t.textContent) : "",
+        title: a.textContent,
+        href: href,
+        excerpt: ex ? ex.textContent : "",
+        tags: Array.prototype.map.call(li.querySelectorAll(".tag"), function (el) { return el.textContent; }),
+        kind: kind
+      });
+    });
+    posts.sort(function (x, y) { return x.date < y.date ? 1 : x.date > y.date ? -1 : 0; });
+    var json = JSON.stringify(posts).replace(/<\//g, "<\\/");
+    return ARCHIVE_TEMPLATE
+      .replace("/*__POSTS__*/", json)
+      .replace(/__SITE__/g, escapeHtml(siteName()));
+  }
 
   /* 页面加载时渲染本地草稿 */
   renderDrafts();
