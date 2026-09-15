@@ -236,6 +236,15 @@ ul{ list-style:none; }
   background:var(--bg-warm); border:1px dashed var(--line); border-radius:8px;
 }
 
+/* ===== 动态代码背景：本站代码滚动 → 定格 → 半透明磨砂 ===== */
+#bgCode{
+  position:fixed; inset:0; z-index:-1;
+  width:100%; height:100%;
+  background:#fff;
+  pointer-events:none;
+  opacity:.9;
+}
+
 /* ===== 页脚 ===== */
 .site-footer{
   border-top:1px solid var(--line);
@@ -1079,6 +1088,7 @@ body.panel-open{ overflow:hidden; }
               }
           </style><style data-styled="active" data-styled-version="5.3.11"></style></head>
 <body data-liner-extension-version="7.18.36" class="">
+<canvas id="bgCode" aria-hidden="true"></canvas>
 <a class="skip-link" href="#main">跳至主要内容</a>
 
 <!-- ===== 顶部导航 ===== -->
@@ -1911,7 +1921,63 @@ items.forEach(function (p) {
       .L-TimestampToLeft {
         left: 0 !important;
       }
-    </style></body>
+    </style>
+<!-- ===== 动态代码背景脚本 ===== -->
+<script>
+(function () {
+  "use strict";
+  var cv = document.getElementById("bgCode");
+  if (!cv) return;
+  var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduced) { cv.style.display = "none"; return; }   /* 用户系统关闭动画：直接静默 */
+  var ctx = cv.getContext("2d");
+  var DPR = window.devicePixelRatio || 1;
+  var W = 0, H = 0;
+  function resize() {
+    W = window.innerWidth; H = window.innerHeight;
+    cv.width = Math.floor(W * DPR); cv.height = Math.floor(H * DPR);
+    cv.style.width = W + "px"; cv.style.height = H + "px";
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+  resize();
+  window.addEventListener("resize", resize);
+  /* 滚动内容：本站自己的 HTML 代码（取中间一段） */
+  var src = document.documentElement.outerHTML || "";
+  var codeLines = src.split("\n").map(function (l) { return l.replace(/\r$/, ""); })
+    .filter(function (l) { return l.trim().length > 0; });
+  var mid = Math.floor(codeLines.length / 2);
+  var lines = codeLines.slice(Math.max(0, mid - 16), mid + 16);
+  var lineH = 22;
+  var off = 0;
+  var timer = null;
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.font = "13px Consolas, 'Courier New', monospace";
+    var maxChars = Math.max(40, Math.floor(W / 9));
+    var y0 = 40 - off;
+    for (var i = 0; i < lines.length; i++) {
+      var y = y0 + i * lineH;
+      if (y < -lineH || y > H + lineH) continue;
+      ctx.fillStyle = "rgba(124,117,97,0.55)";          /* 行号：灰 */
+      ctx.fillText(("000" + (i + 1)).slice(-3), 18, y);
+      ctx.fillStyle = "rgba(217,158,0,0.55)";           /* 代码：浅黄 */
+      ctx.fillText(lines[i].slice(0, maxChars), 64, y);
+    }
+    off += 0.9;
+    if (off >= lineH) off -= lineH;
+  }
+  timer = setInterval(draw, 33);
+  /* 2 秒后定格：停止滚动，透明度降低 + 轻微模糊，形成磨砂玻璃纹理 */
+  setTimeout(function () {
+    if (timer) { clearInterval(timer); timer = null; }
+    cv.style.transition = "opacity 1.4s ease, filter 1.4s ease";
+    cv.style.opacity = "0.16";
+    cv.style.filter = "blur(2.5px)";
+  }, 2000);
+})();
+</script>
+
+</body>
           <div class="liner-mini-tooltip liner-disabled liner-page-text-only-tooltip">
               <div class="liner-page-tooltip-body-point"></div>
               <div class="liner-page-tooltip-body">
